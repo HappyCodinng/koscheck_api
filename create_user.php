@@ -2,7 +2,7 @@
 $conn = new mysqli(
     getenv("MYSQLHOST"),
     getenv("MYSQLUSER"),
-    getenv("MYSQL_ROOT_PASSWORD"),
+    getenv("MYSQLPASSWORD"),
     getenv("MYSQLDATABASE"),
     getenv("MYSQLPORT")
 );
