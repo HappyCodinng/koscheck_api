@@ -13,15 +13,6 @@ require_once __DIR__ . "/../config/database.php";
 
 $data = json_decode(file_get_contents("php://input"), true);
 
-/*if (!data) {
-  echo json_encode([
-    "success" => false,
-    "message" => "Data JSON tidak valid"
-  ]);
-  exit;
-}*/
-
-
 $nama = trim($data['nama'] ?? '');
 $email = trim($data['email'] ?? '');
 $nohp = trim($data['no_hp'] ?? '');
@@ -43,7 +34,7 @@ if(strlen($password) < 6) {
   exit;
 }
 
-$check = $conn->prepare("SELECT id_user FROM `user` WHERE email=?");
+$check = $conn->prepare("SELECT id FROM `user` WHERE email=?");
 $check->bind_param("s", $email);
 $check->execute();
 $check->store_result();
