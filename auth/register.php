@@ -34,7 +34,7 @@ if(strlen($password) < 6) {
   exit;
 }
 
-$check = $conn->prepare("SELECT id_user FROM `user` WHERE email=?");
+$check = $conn->prepare("SELECT id FROM `user` WHERE email=?");
 $check->bind_param("s", $email);
 $check->execute();
 $check->store_result();
