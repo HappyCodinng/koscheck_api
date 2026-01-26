@@ -18,7 +18,7 @@ $sql = "SELECT u.id, u.nama,"
  // u.email, u.no_hp, 
  "r.umur, r.kampus, r.jenis_kelamin, r.deskripsi 
         FROM user u
-        JOIN roommate r ON u.id = r.id_user
+        JOIN roommate r ON u.id = r.id
         WHERE u.id != ?";
 
 if ($jenis_kelamin && $jenis_kelamin !== "Semua") {
