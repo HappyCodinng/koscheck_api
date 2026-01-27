@@ -56,6 +56,22 @@ $stmt = $conn->prepare(
 
 $stmt->bind_param("ssss", $nama, $email, $nohp, $hash);
 
+if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
+  echo json_encode([
+    "success" => false,
+    "message" => "Format email tidak valid"
+  ]);
+  exit;
+}
+
+if (!preg_match('/^[0-9]{11,14}$/', $nohp)) {
+  echo json_encode([
+    "success" => false,
+    "message" => "Format nomor HP tidak valid"
+  ]);
+  exit;
+}
+
 if($stmt->execute()) {
   echo json_encode([
     "success" => true,
