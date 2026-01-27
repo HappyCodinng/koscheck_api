@@ -14,11 +14,9 @@ require_once __DIR__ . "/../config/database.php";
 $id_user_login = $_GET['id'] ?? 0;
 $jenis_kelamin = $_GET['jenis_kelamin'] ?? null;
 
-$sql = "SELECT u.id, u.nama,"
- // u.email, u.no_hp, 
- "r.umur, r.kampus, r.jenis_kelamin, r.deskripsi 
-        FROM user u
-        JOIN roommate r ON u.id = r.id
+$sql = "SELECT u.id, u.nama, r.umur, r.kampus, r.jenis_kelamin, r.deskripsi 
+        FROM users u
+        INNER JOIN roommate r ON u.id = r.id_user
         WHERE u.id != ?";
 
 if ($jenis_kelamin && $jenis_kelamin !== "Semua") {
@@ -28,14 +26,6 @@ if ($jenis_kelamin && $jenis_kelamin !== "Semua") {
 } else {
   $stmt = $conn->prepare($sql);
   $stmt -> bind_param("i", $id_user_login);
-}
-
-if (!$result) {
-  echo json_encode([
-    "status" => false,
-    "message" => mysqli_error($conn)
-  ]);
-  exit;
 }
 
 $stmt->execute();
