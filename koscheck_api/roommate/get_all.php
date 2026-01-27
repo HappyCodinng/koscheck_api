@@ -15,7 +15,7 @@ $id_user_login = $_GET['id'] ?? 0;
 $jenis_kelamin = $_GET['jenis_kelamin'] ?? null;
 
 $sql = "SELECT u.id, u.nama, r.umur, r.kampus, r.jenis_kelamin, r.deskripsi 
-        FROM users u
+        FROM user u
         INNER JOIN roommate r ON u.id = r.id_user
         WHERE u.id != ?";
 
