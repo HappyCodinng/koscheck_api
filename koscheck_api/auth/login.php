@@ -52,11 +52,9 @@ if (!password_verify($password, $user['password'])) {
 
 unset($user['password']);
 
-$token = bin2hex(random_bytes(32));
-
 echo json_encode([
     "success" => true,
     "message" => "Login berhasil",
-    "Token" => $token,
+    "Token" => $user['id'],
     "data"    => $user
 ]);
