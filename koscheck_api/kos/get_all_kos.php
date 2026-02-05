@@ -5,17 +5,24 @@ header('Content-Type: application/json');
 require_once __DIR__ . "/../config/database.php";
 
 $search = $_GET['search'] ?? '';
+$fasilitas = $_GET['fasilitas'] ?? '';
 
-$sql = "SELECT * FROM kos";
+$sql = "SELECT * FROM kos WHERE 1=1";
 $params = [];
 $types = "";
 
 if(!empty($search)) {
-    $sql .= " WHERE nama_kos LIKE ? OR alamat LIKE ?";
-    $keyword = "%" . $search . "%";
+    $sql .= " AND (nama_kos LIKE ? OR alamat LIKE ?)";
+    $keyword = "%$search%";
     $params[] = $keyword;
     $params[] = $keyword;
-    $types = "ss";
+    $types .= "ss";
+}
+
+if(!empty($fasilitas)) {
+    $sql .= " AND fasilitas LIKE ?";
+    $params[] = "%$fasilitas%";
+    $types .= "s";
 }
 
 $sql .= " ORDER BY jarak ASC";
