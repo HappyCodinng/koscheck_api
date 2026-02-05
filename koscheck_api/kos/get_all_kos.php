@@ -20,7 +20,7 @@ if(!empty($search)) {
 
 $sql .= " order by jarak asc";
 
-$stmt->$conn->prepare($sql);
+$stmt = $conn->prepare($sql);
 
 if(!empty($params)) {
     $stmt->bind_param($types, ...$params);
