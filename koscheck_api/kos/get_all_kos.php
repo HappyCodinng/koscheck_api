@@ -6,19 +6,19 @@ require_once __DIR__ . "/../config/database.php";
 
 $search = $_GET['search'] ?? '';
 
-$sql = "select * from kos";
+$sql = "SELECT * FROM kos";
 $params = [];
 $types = "";
 
 if(!empty($search)) {
-    $sql .= "where nama_kos like ? or alamat like ?";
+    $sql .= " WHERE nama_kos LIKE ? OR alamat LIKE ?";
     $keyword = "%" . $search . "%";
     $params[] = $keyword;
     $params[] = $keyword;
     $types = "ss";
 }
 
-$sql .= " order by jarak asc";
+$sql .= " ORDER BY jarak ASC";
 
 $stmt = $conn->prepare($sql);
 
