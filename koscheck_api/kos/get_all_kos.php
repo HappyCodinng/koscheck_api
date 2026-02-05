@@ -1,24 +1,31 @@
 <?php
+header("Access-Control-Allow-Origin: *");
 header('Content-Type: application/json');
+
 require_once __DIR__ . "/../config/database.php";
 
 $search = $_GET['search'] ?? '';
 
-if ($search !== '') {
-    $stmt = $conn->prepare ("
-        SELECT * FROM kos
-        WHERE nama_kos LIKE ?
-        OR alamat LIKE ?
-        ORDER BY Rating DESC
-    ");
-    $keyword = "%$search%";
-    $stmt->bind_param("ss", $keyword, $keyword);
-} else {
-    $stmt = $conn->prepare("
-        SELECT * FROM kos
-        ORDER BY Rating DESC
-    ");
+$sql = "select * from kos";
+$params = [];
+$types = "";
+
+if(!empty($search)) {
+    $sql .= "where nama_kos like ? or alamat like ?";
+    $keyword = "%" . $search . "%";
+    $params[] = $keyword;
+    $params[] = $keyword;
+    $types = "ss";
 }
+
+$sql .= " order by jarak asc";
+
+$stmt->$conn->prepare($sql);
+
+if(!empty($params)) {
+    $stmt->bind_param($types, ...$params);
+}
+
 $stmt->execute();
 $result = $stmt->get_result();
 
